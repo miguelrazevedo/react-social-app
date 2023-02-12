@@ -1,0 +1,94 @@
+@import "../../style.scss";
+
+.navbar {
+  @include themify($themes) {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 20px;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    border: none;
+    border-bottom: 1px solid themed("border");
+    position: sticky;
+    top: 0;
+    // background-color: white;
+    // Para usar as cores do ficheiros style.scss
+    background-color: themed("bg");
+    color: themed("textColor");
+    z-index: 999;
+
+    .leftSide {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+
+      span {
+        font-weight: bold;
+        font-size: 20px;
+        color: themed("logo");
+      }
+      .searchBox {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        border: 1px solid themed("border");
+        border-radius: 10px;
+        padding: 5px;
+        input {
+          width: 500px;
+          border: none;
+          background-color: transparent;
+          color: themed("textColor");
+
+          @include mobile {
+            display: none;
+          }
+
+          @include tablet {
+            width: 200px;
+          }
+        }
+      }
+    }
+
+    .rightSide {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      @include mobile {
+        display: none;
+      }
+
+      .user {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+
+        @include tablet {
+          display: none;
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        img {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          border: 1px solid themed("border");
+          // O que ficar aqui dentro fica em cover
+          object-fit: cover;
+        }
+
+        span {
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
