@@ -1,5 +1,5 @@
 import { db } from "../databaseConnection.js";
-import bcrypt from "bcrypt";
+import * as bcrypt from "bcrypt";
 /*
     - Create users
     POST /api/auth/register
@@ -30,7 +30,7 @@ export const register = async (req, res) => {
       const hashedPassword = await bcrypt.hash(password, salt);
 
       db.query(
-        "INSERT INTO users (`username`, `email`, `password`, `name`) VALUES (?)",
+        "INSERT INTO users (username, email, password, name) VALUES (?, ?, ?, ?)",
         [username, email, hashedPassword, name],
         (err, data) => {
           if (err) {
@@ -38,7 +38,9 @@ export const register = async (req, res) => {
           }
 
           // If the user is sucessefuly created
-          return res.status(200).json("User has been created sucessfully");
+          return res
+            .status(200)
+            .json({ message: "User has been created sucessfully" });
         }
       );
     }
