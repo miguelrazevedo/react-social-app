@@ -16,7 +16,11 @@ const PORT = process.env.PORT || 8800;
 
 // Middleware
 app.use(Express.json());
-app.use(cors());
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", true);
+  next();
+});
+app.use(cors({ origin: "http://localhost:5173" }));
 app.use(cookieParser());
 
 // ROUTES

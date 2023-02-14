@@ -1,42 +1,23 @@
 import React from "react";
 import Post from "../post/Post";
 import "./posts.scss";
+import { useQuery } from "react-query";
+import { fetchPosts } from "../../queries.js";
+import axios from "axios";
 
 const Posts = () => {
-  const POSTS = [
-    {
-      id: 1,
-      name: "John Doe",
-      userId: 1,
-      profilePicture:
-        "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      img: "https://images.pexels.com/photos/4451517/pexels-photo-4451517.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      desc: "Lorem ipsum dolor sit amet. In officia blanditiis et sunt voluptatem id ratione accusamus. Ea culpa omnis aut earum iusto qui rerum necessitatibus eos culpa incidunt qui tempora voluptas.",
-    },
-    {
-      id: 2,
-      name: "John Doe",
-      userId: 1,
-      profilePicture:
-        "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      img: "https://images.pexels.com/photos/4451517/pexels-photo-4451517.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      desc: "Lorem ipsum dolor sit amet. In officia blanditiis et sunt voluptatem id ratione accusamus. Ea culpa omnis aut earum iusto qui rerum necessitatibus eos culpa incidunt qui tempora voluptas.",
-    },
-    {
-      id: 3,
-      name: "John Doe",
-      userId: 1,
-      profilePicture:
-        "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      img: "https://images.pexels.com/photos/4451517/pexels-photo-4451517.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      desc: "Lorem ipsum dolor sit amet. In officia blanditiis et sunt voluptatem id ratione accusamus. Ea culpa omnis aut earum iusto qui rerum necessitatibus eos culpa incidunt qui tempora voluptas.",
-    },
-  ];
+  const { isLoading, error, data } = useQuery("posts", fetchPosts);
+
+  console.log(data);
   return (
     <div className="posts">
-      {POSTS.map((post) => {
-        return <Post post={post} key={post.id} />;
-      })}
+      {error
+        ? "Something went wrong!"
+        : isLoading
+        ? "Loading..."
+        : data.map((post) => {
+            return <Post post={post} key={post.id} />;
+          })}
     </div>
   );
 };
