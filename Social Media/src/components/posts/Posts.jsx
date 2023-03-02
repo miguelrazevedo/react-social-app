@@ -3,7 +3,6 @@ import Post from "../post/Post";
 import "./posts.scss";
 import { useQuery } from "react-query";
 import { fetchPosts } from "../../queries.js";
-import axios from "axios";
 
 const Posts = () => {
   const { isLoading, error, data } = useQuery("posts", fetchPosts);

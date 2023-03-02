@@ -32,7 +32,7 @@ const Post = ({ post }) => {
         </div>
 
         <div className="content">
-          <p>{post.desc}</p>
+          <p>{post.description}</p>
           <img src={post.img} alt="" />
         </div>
 

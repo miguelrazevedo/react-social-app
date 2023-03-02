@@ -3,7 +3,7 @@ dotenv.config();
 import Express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-
+import multer from "multer";
 // Express config
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
@@ -23,6 +23,21 @@ app.use((req, res, next) => {
 app.use(cors({ origin: "http://localhost:5173" }));
 app.use(cookieParser());
 
+// Multer Middleware
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "../Social Media/public/uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
+
+app.post("/api/upload", upload.single("file"), (req, res) => {
+  res.status(200).json({ message: req.file.filename });
+});
 // ROUTES
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
