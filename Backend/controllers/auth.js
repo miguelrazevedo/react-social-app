@@ -1,14 +1,17 @@
 import { db } from "../databaseConnection.js";
 import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-/*
-    - Create user
-    POST /api/auth/register
-    body:
-        username,
-        name
-        email,
-        password,
+import { Request, Response } from "express";
+// JSDOC
+
+/**
+ * Creates a user and stores it into the database.
+ *
+ * - POST `/api/auth/register`
+ * * Body: { username, name, email, password }
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Response<any, Record<string, any>>}
  */
 export const register = async (req, res) => {
   // Check if user exists, create otherwise
@@ -29,7 +32,6 @@ export const register = async (req, res) => {
       // Hash user's password
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
-
       db.query(
         "INSERT INTO users (username, email, password, name) VALUES (?, ?, ?, ?)",
         [username, email, hashedPassword, name],
@@ -48,12 +50,14 @@ export const register = async (req, res) => {
   );
 };
 
-/*
-    - Login user
-    POST /api/auth/login
-    body:
-        username,
-        password
+/**
+ * Logs in a user and sends JWT + User info.
+ *
+ * - POST `/api/auth/login`
+ * * Body: { username, password }
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Response<any, Record<string, any>>}
  */
 export const login = async (req, res) => {
   const { username } = req.body;
@@ -99,9 +103,13 @@ export const login = async (req, res) => {
   );
 };
 
-/*
-    - Logout user
-    POST /api/auth/logout
+/**
+ * Logs out a user (if logged in).
+ *
+ * - POST `/api/auth/logout`
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Response<any, Record<string, any>>}
  */
 export const logout = (req, res) => {
   // Clear the cookie that contains the JWT

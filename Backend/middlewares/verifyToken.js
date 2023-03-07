@@ -1,5 +1,14 @@
 import jwt from "jsonwebtoken";
+import { Request, Response, NextFunction } from "express";
 
+/**
+ * Middleware to check if the user has authorization.
+ * If so, will add to the Request Object, userId parameter
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ * @returns {Response<any, Record<string, any>> | void}
+ */
 export const verifyToken = (req, res, next) => {
   const token = req.cookies.accessToken;
 

@@ -1,9 +1,19 @@
 import moment from "moment/moment.js";
 import { db } from "../databaseConnection.js";
-
+import { Request, Response } from "express";
 /*
     - Get timeline posts
     GET /api/posts/
+ */
+
+/**
+ * Gets all the posts from the database (posts from people that the user follows).
+ *
+ * - GET `/api/posts/`
+ * * User id in Req.UserId
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Response<any, Record<string, any>>}
  */
 export const getPosts = (req, res) => {
   /**
@@ -33,6 +43,15 @@ export const getPosts = (req, res) => {
     body:
     - description
     - img (optional)
+ */
+/**
+ * Creates a post.
+ * - POST `/api/posts/`
+ * * User id in Req.UserId
+ * * Body: { description, img }
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Response<any, Record<string, any>>}
  */
 export const createPost = (req, res) => {
   const values = [
